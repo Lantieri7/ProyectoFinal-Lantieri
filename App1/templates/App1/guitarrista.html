@@ -1,0 +1,44 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1>Bienvenido al menú de Guitarristas!</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+    <h1>Rock&Roll!</h1>
+    <form action="" method="post">
+        {{ form }}
+        {% csrf_token %} 
+               <input type="submit" value="Agregar">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for guitarrista in guitarrista %}
+            <tr>
+                <td>
+                    {{ guitarrista.id }}
+                </td>
+                <td>
+                    {{ guitarrista.nombre }}
+                </td>
+                <td>
+                    {{ guitarrista.apellido }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

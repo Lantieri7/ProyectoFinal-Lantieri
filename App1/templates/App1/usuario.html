@@ -1,0 +1,50 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1>Bienvenidos Usuarios!</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+    <h1>Rock&Roll!</h1>
+    <form action="" method="post">
+        <table>
+        {{ form.as_table }}
+        </table>
+        {% csrf_token %} 
+               <input type="submit" value="Agregar">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for usuario in usuario %}
+            <tr>
+                <td>
+                    {{ usuario.id }}
+                </td>
+                <td>
+                    {{ usuario.nombre }}
+                </td>
+                <td>
+                    {{ usuario.apellido }}
+                </td>
+                <td>
+                    {{ usuario.email }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

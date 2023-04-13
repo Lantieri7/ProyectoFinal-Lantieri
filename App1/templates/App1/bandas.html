@@ -1,0 +1,42 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1>Bienvenido al menú de Bandas!</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+    <h1>Bandas Favoritas!</h1>
+    <form action="" method="post">
+        <table>
+            {{ form.as_table }}
+            </table>
+        {% csrf_token %} 
+               <input type="submit" value="Agregar">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for bandas in bandas %}
+            <tr>
+                <td>
+                    {{ bandas.id }}
+                </td>
+                <td>
+                    {{ bandas.nombre }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
