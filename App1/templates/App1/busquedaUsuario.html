@@ -1,0 +1,20 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1 class="mb-5">Busqueda Usuario</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<form action="{% url 'buscar' %}" method="get">
+
+
+    <input type="text" name="apellido", id="apellido" placeholder="Incerte Apellido">
+
+    <input type="submit" value="Busque por apellido">
+
+</form>
+
+{% endblock %}

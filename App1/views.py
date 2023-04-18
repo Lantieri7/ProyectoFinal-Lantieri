@@ -38,6 +38,18 @@ def usuario(request):
     contex = {"usuario": usuario, "form": form}
     return render(request,'App1/usuario.html', contex)
 
+
+def busquedaUsuario(request):
+    return render(request, "App1/busquedaUsuario.html")
+
+def buscar(request):
+    apellido= request.GET["apellido"]
+    if apellido !="":
+        usuario=Usuario.objects.filter(apellido__icontains=apellido)
+        return render(request, "App1/resultadosBusqueda.html", {"usuario": usuario})
+    else:
+        return render(request, "App1/busquedaUsuario.html", {"mensaje": "Ingrese un Apellido"})
+
 def bandas(request):
 
     if request.method == "POST":
@@ -96,3 +108,6 @@ def inicio(request):
 
 def inicioApp1(request):
     return render(request,'App1/inicio.html')
+
+    
+

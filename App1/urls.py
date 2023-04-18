@@ -10,5 +10,7 @@ urlpatterns = [
     path('bandas/', bandas, name="bandas"),
     path('vocalista/', vocalista, name="vocalista"),
     path('guitarrista/', guitarrista, name="guitarrista"),
+    path('busquedaUsuario/', busquedaUsuario, name="busquedaUsuario"),
+    path('buscar/', buscar, name="buscar"),
     
 ]

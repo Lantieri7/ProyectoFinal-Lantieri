@@ -1,0 +1,40 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1 class="mb-5">Resultados de Busqueda!</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% if usuario %}
+
+<h2>Listado de Usuarios</h2>
+
+<table>
+    <thead>
+       <tr>
+         <th>Nombre</th>
+         <th>Apellido</th>
+         <th>Email</th>
+      </tr>
+   </thead>
+   <tbody>
+     {% for user in usuario %}
+       <tr>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.apellido }}</td>
+          <td>{{ usuario.email }}</td>
+       </tr>
+         {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+<h2>No se encontraron usuarios con ese apellido</h2>
+
+{% endif %}
+
+{% endblock %}
