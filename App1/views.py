@@ -43,8 +43,8 @@ def busquedaUsuario(request):
     return render(request, "App1/busquedaUsuario.html")
 
 def buscar(request):
-      apellido= request.GET["apellido"]
-      if request.GET['apellido']:
+      if request.GET["apellido"]:
+        apellido= request.GET["apellido"]
         usuario=Usuario.objects.filter(apellido__icontains=apellido)
         return render(request, "App1/resultadosBusqueda.html", {"usuario": usuario})
       else:
