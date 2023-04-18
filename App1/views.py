@@ -43,11 +43,11 @@ def busquedaUsuario(request):
     return render(request, "App1/busquedaUsuario.html")
 
 def buscar(request):
-    apellido= request.GET["apellido"]
-    if apellido !="":
+      apellido= request.GET["apellido"]
+      if request.GET['apellido']:
         usuario=Usuario.objects.filter(apellido__icontains=apellido)
         return render(request, "App1/resultadosBusqueda.html", {"usuario": usuario})
-    else:
+      else:
         return render(request, "App1/busquedaUsuario.html", {"mensaje": "Ingrese un Apellido"})
 
 def bandas(request):
