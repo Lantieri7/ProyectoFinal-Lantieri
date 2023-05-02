@@ -3,17 +3,17 @@ from .models import Usuario, Bandas, Vocalista, Guitarrista
 from .forms import *
 from django.http import HttpResponse
 
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout, authenticate 
+
 # Create your views here.
 def Curso1(request):
     
     nombre_curso="Python"
-    
-
     usuario=Usuario(nombre=nombre_curso)
     usuario.save()
     respuesta=(f"Curso creado----> {nombre_curso}")
     return HttpResponse(respuesta)
-
 
 def usuario(request):
     
@@ -50,6 +50,31 @@ def buscar(request):
       else:
         return render(request, "App1/busquedaUsuario.html", {"mensaje": "Ingrese un Apellido"})
 
+def eliminarUsuario(request, id):
+    usuario=Usuario.objects.get(id=id)
+    usuario.delete()
+    usuario=Usuario.objects.all()
+    form=UsuarioForm()
+    return render(request,'App1/usuario.html',{"usuario": usuario, "mensaje": "Usuario eliminado correctamente"})
+
+def editarUsuario(request, id):
+    usuario=Usuario.objects.get(id=id)
+    if request.method=="POST":
+        form= UsuarioForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            usuario.nombre=info["nombre"]
+            usuario.apellido=info["apellido"]
+            usuario.email=info["email"]
+            usuario.save()
+            usuario=Usuario.objects.all()
+            form=UsuarioForm()
+            return render(request, 'App1/usuario.html',{"usuario": usuario, "mensaje": "Usuario editado correctamente"})
+        pass
+    else:
+        formulario=UsuarioForm(initial={"nombre": usuario.nombre, "apellido":usuario.apellido, "email": usuario.email})
+        return render (request, 'App1/usuario.html', {"form": formulario, "usuario": usuario})
+##################################################################################################
 def bandas(request):
 
     if request.method == "POST":
@@ -68,7 +93,7 @@ def bandas(request):
     bandas= Bandas.objects.all()
     contex = {"bandas": bandas, "form": form}
     return render(request,'App1/bandas.html', contex)
-
+######################################################################
 def vocalista(request):
         if request.method == "POST":
          form = VocalistaForm(request.POST)
@@ -97,17 +122,34 @@ def guitarrista(request):
     else:
           form = GuitarristaForm()
 
-
-
     guitarrista= Guitarrista.objects.all()
     contex = {"guitarrista": guitarrista, "form": form}
     return render(request,'App1/guitarrista.html', contex)
-
+###################################################################
 def inicio(request):
     return HttpResponse("Bienvenidos a la página principal")
 
 def inicioApp1(request):
     return render(request,'App1/inicio.html')
+###################################################################   
 
-    
+def login_request(request):
+    if request.method=="POST":
+      form=AuthenticationForm(request, data=request.POST)
+      if form.is_valid():
+          info=form.cleaned_data
+          usu=info["username"]
+          clave=info["password"]
 
+          if usuario is not None: 
+              login(request, usuario)
+              return render(request, 'App1/inicio.html', {"mensaje": f"Usuario {usu} logueado correctamente"})
+          else:
+              return render (request, 'App1/login.html', {"form": form, "mensaje":"Usuario o contraseña incorrectos"})
+          
+      else:
+          return render(request, 'App1/login.html', {"form": form, "mensaje":"Usuario o contraseña incorrectos"})
+      
+    else:
+        form=AuthenticationForm()
+        return render(request, 'App1/login.html', {"form":form})

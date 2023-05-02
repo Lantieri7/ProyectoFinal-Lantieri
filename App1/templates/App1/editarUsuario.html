@@ -1,0 +1,25 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+
+<h1 class="mb-5">Editando Usuario: {{ usuario }} </h1>
+
+{% endblock %}
+
+<h3>{{ mensaje }}</h3>
+
+<form action="{% url 'editarUsuario' usuario.id %}" method="post">
+    
+    {% csrf_token %} 
+
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="submit" value="Guardar Cambios">
+
+</form>
+
+{% endblock %}

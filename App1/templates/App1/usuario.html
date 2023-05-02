@@ -9,6 +9,7 @@
 {% block contenido_que_cambia %}
 
     <h1>Rock&Roll!</h1>
+    <h2>{{ mensaje }}</h2>
     <form action="" method="post">
         <table>
         {{ form.as_table }}
@@ -24,11 +25,12 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
+                <th>OPCIONES</th>
             </tr>
         </thead>
         <tbody>
 
-            {% for usuario in usuario %}
+            {% for usuario in Usuario %}
             <tr>
                 <td>
                     {{ usuario.id }}
@@ -41,6 +43,10 @@
                 </td>
                 <td>
                     {{ usuario.email }}
+                </td>
+                <td>
+                    <a class="btn btn-danger", href="{% url 'eliminarUsuario' usuario.id %}"> Eliminar </a>
+                    <a class="btn btn-success", href="{% url 'editarUsuario' usuario.id %}"> Editar</a>
                 </td>
             </tr>
             {% endfor %}
