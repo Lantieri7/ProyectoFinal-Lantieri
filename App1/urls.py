@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from App2.views import *
 
 
 urlpatterns = [
@@ -15,6 +16,7 @@ urlpatterns = [
     path('buscar/', buscar, name="buscar"),
     path('eliminarUsuario/<id>',eliminarUsuario, name="eliminarUsuario" ),
     path('editarUsuario/<id>', editarUsuario, name="editarUsuario" ),
+
 
     path('login/', login_request, name="login"),
 ]

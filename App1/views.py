@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Usuario, Bandas, Vocalista, Guitarrista
 from .forms import *
 from django.http import HttpResponse
@@ -39,41 +39,7 @@ def usuario(request):
     return render(request,'App1/usuario.html', contex)
 
 
-def busquedaUsuario(request):
-    return render(request, "App1/busquedaUsuario.html")
 
-def buscar(request):
-      if request.GET["apellido"]:
-        apellido= request.GET["apellido"]
-        usuario=Usuario.objects.filter(apellido__icontains=apellido)
-        return render(request, "App1/resultadosBusqueda.html", {"usuario": usuario})
-      else:
-        return render(request, "App1/busquedaUsuario.html", {"mensaje": "Ingrese un Apellido"})
-
-def eliminarUsuario(request, id):
-    usuario=Usuario.objects.get(id=id)
-    usuario.delete()
-    usuario=Usuario.objects.all()
-    form=UsuarioForm()
-    return render(request,'App1/usuario.html',{"usuario": usuario, "mensaje": "Usuario eliminado correctamente"})
-
-def editarUsuario(request, id):
-    usuario=Usuario.objects.get(id=id)
-    if request.method=="POST":
-        form= UsuarioForm(request.POST)
-        if form.is_valid():
-            info=form.cleaned_data
-            usuario.nombre=info["nombre"]
-            usuario.apellido=info["apellido"]
-            usuario.email=info["email"]
-            usuario.save()
-            usuario=Usuario.objects.all()
-            form=UsuarioForm()
-            return render(request, 'App1/usuario.html',{"usuario": usuario, "mensaje": "Usuario editado correctamente"})
-        pass
-    else:
-        formulario=UsuarioForm(initial={"nombre": usuario.nombre, "apellido":usuario.apellido, "email": usuario.email})
-        return render (request, 'App1/usuario.html', {"form": formulario, "usuario": usuario})
 ##################################################################################################
 def bandas(request):
 
@@ -110,6 +76,8 @@ def vocalista(request):
         contex = {"vocalista": vocalista,"form": form}
         return render(request,'App1/vocalista.html', contex)
 
+
+#######################################################
 def guitarrista(request):
     if request.method == "POST":
          form = GuitarristaForm(request.POST)
