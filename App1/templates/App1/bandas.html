@@ -34,6 +34,10 @@
                 <td>
                     {{ bandas.nombre }}
                 </td>
+                <td>
+                    <a class="btn btn-danger", href="{% url 'eliminarBandas' bandas.id %}"> Eliminar </a>
+                    <a class="btn btn-success", href="{% url 'editarBandas' bandas.id %}"> Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

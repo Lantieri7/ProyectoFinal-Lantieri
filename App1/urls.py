@@ -6,7 +6,6 @@ from App2.views import *
 urlpatterns = [
     
     path('', inicioApp1, name="inicioApp1"),
-    path('Curso1/', Curso1),
     path('usuario/', usuario, name="usuario"),
     path('bandas/', bandas, name="bandas"),
     path('vocalista/', vocalista, name="vocalista"),
@@ -17,6 +16,10 @@ urlpatterns = [
     path('eliminarUsuario/<id>',eliminarUsuario, name="eliminarUsuario" ),
     path('editarUsuario/<id>', editarUsuario, name="editarUsuario" ),
 
+    path('eliminarBandas/<id>',eliminarBandas, name="eliminarBandas" ),
+    path('editarBandas/<id>', editarBandas, name="editarBandas" ),
+    path('busquedaBandas/', busquedaBandas, name="busquedaBandas"),
+    path('buscarBandas/', buscarBandas, name="buscarBandas"),
 
     path('login/', login_request, name="login"),
 ]

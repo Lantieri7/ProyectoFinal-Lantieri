@@ -17,9 +17,8 @@ def buscar(request):
 def eliminarUsuario(request, id):
     usuario=Usuario.objects.get(id=id)
     usuario.delete()
-    usuario=Usuario.objects.all()
-    form=UsuarioForm()
-    return render(request,'App1/usuario.html',{"usuario": usuario, "mensaje": "Usuario eliminado correctamente"})
+    return redirect("usuario")
+
 
 def editarUsuario(request, id):
     usuario=Usuario.objects.get(id=id)
@@ -38,3 +37,38 @@ def editarUsuario(request, id):
     else:
         formulario=UsuarioForm(initial={"nombre": usuario.nombre, "apellido":usuario.apellido, "email": usuario.email})
         return render (request, 'App1/editarUsuario.html', {"form": formulario, "usuario": usuario})
+    
+#########################################################################################################################
+
+def eliminarBandas(request, id):
+    bandas=Bandas.objects.get(id=id)
+    bandas.delete()
+    return redirect("bandas")
+
+
+def editarBandas(request, id):
+    bandas=Bandas.objects.get(id=id)
+    if request.method=="POST":
+        form= BandasForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            bandas.nombre=info["nombre"]
+            bandas.save()
+            bandas=Bandas.objects.all()
+            form=BandasForm()
+            return redirect ("bandas")
+        pass
+    else:
+        formulario=BandasForm(initial={"nombre": bandas.nombre})
+        return render (request, 'App1/editarUsuario.html', {"form": formulario, "bandas": bandas})
+    
+def busquedaBandas(request):
+     return render(request, "App1/busquedaBandas.html")
+
+def buscarBandas(request):
+      if request.GET["nombre"]:
+        nombre= request.GET["nombre"]
+        bandas=Bandas.objects.filter(nombre__icontains=nombre)
+        return render(request, "App1/resultadosBusquedaBandas.html", {"bandas": bandas})
+      else:
+        return render(request, "App1/busquedaBandas.html", {"mensaje": "Ingrese un Nombre"})

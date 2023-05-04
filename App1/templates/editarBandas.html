@@ -1,0 +1,21 @@
+<h1 class="mb-5">Editando Bandas: {{ bandas }} </h1>
+
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h3>{{ mensaje }}</h3>
+
+<form action="" method="post">
+    
+    {% csrf_token %} 
+
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="submit" value="Guardar Cambios">
+
+</form>
+
+{% endblock %}

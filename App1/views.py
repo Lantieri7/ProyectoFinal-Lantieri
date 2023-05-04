@@ -5,15 +5,7 @@ from django.http import HttpResponse
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate 
-
-# Create your views here.
-def Curso1(request):
-    
-    nombre_curso="Python"
-    usuario=Usuario(nombre=nombre_curso)
-    usuario.save()
-    respuesta=(f"Curso creado----> {nombre_curso}")
-    return HttpResponse(respuesta)
+from django.views.generic import ListView, DeleteView, DetailView, UpdateView, CreateView
 
 def usuario(request):
     
@@ -75,9 +67,7 @@ def vocalista(request):
         vocalista= Vocalista.objects.all()
         contex = {"vocalista": vocalista,"form": form}
         return render(request,'App1/vocalista.html', contex)
-
-
-#######################################################
+######################################################################
 def guitarrista(request):
     if request.method == "POST":
          form = GuitarristaForm(request.POST)
@@ -99,8 +89,7 @@ def inicio(request):
 
 def inicioApp1(request):
     return render(request,'App1/inicio.html')
-###################################################################   
-
+##################################################################
 def login_request(request):
     if request.method=="POST":
       form=AuthenticationForm(request, data=request.POST)
