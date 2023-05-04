@@ -17,7 +17,7 @@ urlpatterns = [
     path('editarUsuario/<id>', editarUsuario, name="editarUsuario" ),
 
     path('eliminarBandas/<id>',eliminarBandas, name="eliminarBandas" ),
-    path('editarBandas/<id>', editarBandas, name="editarBandas" ),
+    path('editarBandas<id>', editarBandas, name="editarBandas" ),
     path('busquedaBandas/', busquedaBandas, name="busquedaBandas"),
     path('buscarBandas/', buscarBandas, name="buscarBandas"),
 
