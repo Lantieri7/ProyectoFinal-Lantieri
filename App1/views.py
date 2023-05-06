@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate 
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, CreateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def usuario(request):
     
@@ -33,6 +35,7 @@ def usuario(request):
 
 
 ##################################################################################################
+@login_required
 def bandas(request):
 
     if request.method == "POST":
@@ -52,6 +55,7 @@ def bandas(request):
     contex = {"bandas": bandas, "form": form}
     return render(request,'App1/bandas.html', contex)
 ######################################################################
+@login_required
 def vocalista(request):
         if request.method == "POST":
          form = VocalistaForm(request.POST)
@@ -68,6 +72,7 @@ def vocalista(request):
         contex = {"vocalista": vocalista,"form": form}
         return render(request,'App1/vocalista.html', contex)
 ######################################################################
+@login_required
 def guitarrista(request):
     if request.method == "POST":
          form = GuitarristaForm(request.POST)
@@ -90,23 +95,4 @@ def inicio(request):
 def inicioApp1(request):
     return render(request,'App1/inicio.html')
 ##################################################################
-def login_request(request):
-    if request.method=="POST":
-      form=AuthenticationForm(request, data=request.POST)
-      if form.is_valid():
-          info=form.cleaned_data
-          usu=info["username"]
-          clave=info["password"]
 
-          if usuario is not None: 
-              login(request, usuario)
-              return render(request, 'App1/inicio.html', {"mensaje": f"Usuario {usu} logueado correctamente"})
-          else:
-              return render (request, 'App1/login.html', {"form": form, "mensaje":"Usuario o contraseña incorrectos"})
-          
-      else:
-          return render(request, 'App1/login.html', {"form": form, "mensaje":"Usuario o contraseña incorrectos"})
-      
-    else:
-        form=AuthenticationForm()
-        return render(request, 'App1/login.html', {"form":form})
