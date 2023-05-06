@@ -1,4 +1,8 @@
-{% extends 'padre.html' %}
+{% extends 'templates/padre.html' %}
+
+{% block content %}
+  <!-- ProyectoCoder/proyectocoder/App1/templates/App1/padre.html -->
+{% endblock %}
 
 {% block content %}
 <h1>Conversaciones</h1>
@@ -9,9 +13,9 @@
 </ul>
 {% endblock %}
 mensajes.html:
-{% extends 'base.html' %}
+{% extends 'templates/padre.html' %}
 
-{% block content %}
+{% block contenido_que_cambia %}
 <h1>Conversación con {{ conversacion.participantes|join:", " }}</h1>
 <ul>
 {% for mensaje in mensajes %}
@@ -23,4 +27,5 @@ mensajes.html:
     <textarea name="texto"></textarea>
     <input type="submit" value="Enviar">
 </form>
+
 {% endblock %}

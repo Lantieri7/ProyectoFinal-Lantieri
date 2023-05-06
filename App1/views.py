@@ -134,13 +134,13 @@ def agregarAvatar(request):
 @login_required
 def conversaciones(request):
     conversaciones = request.user.conversaciones.all()
-    return render(request, 'conversaciones.html', {'conversaciones': conversaciones})
+    return render(request, 'App3/conversaciones.html', {'conversaciones': conversaciones})
 
 @login_required
 def mensajes(request, conversacion_id):
     conversacion = get_object_or_404(Conversacion, id=conversacion_id, participantes=request.user)
     mensajes = conversacion.mensajes.all()
-    return render(request, 'mensajes.html', {'conversacion': conversacion, 'mensajes': mensajes})
+    return render(request, 'App3/mensajes.html', {'conversacion': conversacion, 'mensajes': mensajes})
 
 @login_required
 def enviar_mensaje(request, conversacion_id):

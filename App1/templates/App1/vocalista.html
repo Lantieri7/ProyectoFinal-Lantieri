@@ -35,6 +35,10 @@
                 <td>
                     {{ vocalista.apellido }}
                 </td>
+                <td>
+                    <a class="btn btn-danger", href="{% url 'eliminarVocalista' vocalista.id %}"> Eliminar </a>
+                    <a class="btn btn-success", href="{% url 'editarVocalista' vocalista.id %}"> Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

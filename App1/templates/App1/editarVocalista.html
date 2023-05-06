@@ -1,0 +1,21 @@
+<h1 class="mb-5">Editando Vocalista: {{ vocalista }} </h1>
+
+
+
+{% block contenido_que_cambia %}
+
+<h3>{{ mensaje }}</h3>
+
+<form action="" method="post">
+    
+    {% csrf_token %} 
+
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="submit" value="Guardar Cambios">
+
+</form>
+
+{% endblock %}

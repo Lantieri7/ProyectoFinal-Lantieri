@@ -1,0 +1,39 @@
+{% extends "App1/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1 class="mb-5">Resultados de Busqueda!</h1> 
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% if guitarrista %}
+
+<h2>Listado de Guitarristas</h2>
+
+<table>
+    <thead>
+       <tr>
+         <th>Nombre</th>
+         <th>Apellido</th>
+         <th>Email</th>
+      </tr>
+   </thead>
+   <tbody>
+     {% for guitarrista in guitarrista %}
+       <tr>
+          <td>{{ guitarrista.nombre }}</td>
+          <td>{{ guitarrista.apellido }}</td>
+       </tr>
+         {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+<h2>No se encontraron guitarristas con ese apellido</h2>
+
+{% endif %}
+
+{% endblock %}

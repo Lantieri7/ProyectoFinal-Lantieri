@@ -156,9 +156,9 @@ def editarGuitarrista(request, id):
             info=form.cleaned_data
             guitarrista.nombre=info["nombre"]
             guitarrista.save()
-            guitarristas=Guitarrista.objects.all()
+            guitarrista=Guitarrista.objects.all()
             form=GuitarristaForm()
-            return redirect ("bandas")
+            return redirect ("guitarrista")
         pass
     else:
         formulario=GuitarristaForm(initial={"nombre": guitarrista.nombre})
@@ -166,7 +166,7 @@ def editarGuitarrista(request, id):
 
 @login_required   
 def busquedaGuitarrista(request):
-     return render(request, "App1/busquedaBandas.html")
+     return render(request, "App1/busquedaGuitarrista.html")
 
 @login_required
 def buscarGuitarrista(request):
@@ -176,3 +176,40 @@ def buscarGuitarrista(request):
         return render(request, "App1/resultadosBusquedaGuitarrista.html", {"guitarrista": guitarrista})
       else:
         return render(request, "App1/busquedaGuitarrista.html", {"mensaje": "Ingrese un Nombre"})
+#########################################################################################################
+
+@login_required
+def eliminarVocalista(request, id):
+    vocalista=Vocalista.objects.get(id=id)
+    vocalista.delete()
+    return redirect("vocalista")
+
+@login_required
+def editarVocalista(request, id):
+    vocalista=Vocalista.objects.get(id=id)
+    if request.method=="POST":
+        form= VocalistaForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            vocalista.nombre=info["nombre"]
+            vocalista.save()
+            vocalista=Vocalista.objects.all()
+            form=VocalistaForm()
+            return redirect ("vocalista")
+        pass
+    else:
+        formulario=VocalistaForm(initial={"nombre": vocalista.nombre})
+        return render (request, 'App1/editarVocalista.html', {"form": formulario, "vocalista": vocalista})
+
+@login_required   
+def busquedaVocalista(request):
+     return render(request, "App1/busquedaVocalista.html")
+
+@login_required
+def buscarVocalista(request):
+      if request.GET["nombre"]:
+        nombre= request.GET["nombre"]
+        vocalista=Vocalista.objects.filter(nombre__icontains=nombre)
+        return render(request, "App1/resultadosBusquedaVocalista.html", {"guitarrista": vocalista})
+      else:
+        return render(request, "App1/busquedaVocalista.html", {"mensaje": "Ingrese un Nombre"})

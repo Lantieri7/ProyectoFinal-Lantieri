@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block titulo %}
-    <h1 class="mb-5">Busqueda  de Bandas</h1> 
+    <h1 class="mb-5">Busqueda  de Vocalista</h1> 
 {% endblock %}
 
 {% block contenido_que_cambia %}
 
-<form action="{% url 'buscarBandas' %}" method="get">
+<form action="{% url 'buscarVovalista' %}" method="get">
 
 
-    <input type="text" name="nombre", id="nombre" placeholder="Nombre de la banda: ">
+    <input type="text" name="nombre", id="nombre" placeholder="Nombre del Vocalista: ">
 
     <input type="submit" value="Busque por nombre">
 
