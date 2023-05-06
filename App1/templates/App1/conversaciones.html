@@ -1,0 +1,26 @@
+{% extends 'padre.html' %}
+
+{% block content %}
+<h1>Conversaciones</h1>
+<ul>
+{% for conversacion in conversaciones %}
+    <li><a href="{% url 'mensajes' conversacion_id=conversacion.id %}">Conversación con {{ conversacion.participantes|join:", " }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+mensajes.html:
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Conversación con {{ conversacion.participantes|join:", " }}</h1>
+<ul>
+{% for mensaje in mensajes %}
+    <li>{{ mensaje.autor }}: {{ mensaje.texto }}</li>
+{% endfor %}
+</ul>
+<form method="post" action="{% url 'enviar_mensaje' conversacion_id=conversacion.id %}">
+    {% csrf_token %}
+    <textarea name="texto"></textarea>
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}

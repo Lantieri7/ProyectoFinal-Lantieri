@@ -139,3 +139,40 @@ def editarPerfil(request):
     else:
         form=UserEditForm(instance=usuario)
         return render(request, "App1/editarPerfil.html", {"form": form, "nombreusuario":usuario.username})
+#######################################################################################################################
+
+@login_required
+def eliminarGuitarrista(request, id):
+    bandas=Guitarrista.objects.get(id=id)
+    bandas.delete()
+    return redirect("guitarrista")
+
+@login_required
+def editarGuitarrista(request, id):
+    guitarrista=Guitarrista.objects.get(id=id)
+    if request.method=="POST":
+        form= GuitarristaForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            guitarrista.nombre=info["nombre"]
+            guitarrista.save()
+            guitarristas=Guitarrista.objects.all()
+            form=GuitarristaForm()
+            return redirect ("bandas")
+        pass
+    else:
+        formulario=GuitarristaForm(initial={"nombre": guitarrista.nombre})
+        return render (request, 'App1/editarGuitarrista.html', {"form": formulario, "guitarrista": guitarrista})
+
+@login_required   
+def busquedaGuitarrista(request):
+     return render(request, "App1/busquedaBandas.html")
+
+@login_required
+def buscarGuitarrista(request):
+      if request.GET["nombre"]:
+        nombre= request.GET["nombre"]
+        guitarrista=Guitarrista.objects.filter(nombre__icontains=nombre)
+        return render(request, "App1/resultadosBusquedaGuitarrista.html", {"guitarrista": guitarrista})
+      else:
+        return render(request, "App1/busquedaGuitarrista.html", {"mensaje": "Ingrese un Nombre"})

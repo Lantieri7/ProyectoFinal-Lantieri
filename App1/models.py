@@ -29,3 +29,15 @@ class Guitarrista(models.Model):
 class Avatar(models.Model):
     imagen= models.ImageField(upload_to="avatars")
     user=models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Conversacion(models.Model):
+    participantes = models.ManyToManyField(User, related_name='conversaciones')
+
+class Mensaje(models.Model):
+    conversacion = models.ForeignKey(Conversacion, related_name='mensajes', on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, related_name='mensajes_enviados', on_delete=models.CASCADE)
+    texto = models.TextField()
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.emisor.username} -> {self.receptor.username}: {self.contenido}'

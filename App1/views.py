@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Usuario, Bandas, Vocalista, Guitarrista, Avatar
 from .forms import *
 from django.http import HttpResponse
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate 
 from django.views.generic import ListView, DeleteView, DetailView, UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from .models import Conversacion, Mensaje
+from django.shortcuts import render, get_object_or_404
 def usuario(request):
     
     if request.method == "POST":
@@ -128,3 +128,27 @@ def agregarAvatar(request):
     else:
         form=AvatarForm()
         return render(request, "App1/agregarAvatar.html", {"form": form, "usuario": request.user, "avatar":obtenerAvatar(request)})
+    
+#############################################################################################################################################
+
+@login_required
+def conversaciones(request):
+    conversaciones = request.user.conversaciones.all()
+    return render(request, 'conversaciones.html', {'conversaciones': conversaciones})
+
+@login_required
+def mensajes(request, conversacion_id):
+    conversacion = get_object_or_404(Conversacion, id=conversacion_id, participantes=request.user)
+    mensajes = conversacion.mensajes.all()
+    return render(request, 'mensajes.html', {'conversacion': conversacion, 'mensajes': mensajes})
+
+@login_required
+def enviar_mensaje(request, conversacion_id):
+    conversacion = get_object_or_404(Conversacion, id=conversacion_id, participantes=request.user)
+    if request.method == 'POST':
+        mensaje = Mensaje()
+        mensaje.conversacion = conversacion
+        mensaje.autor = request.user
+        mensaje.texto = request.POST.get('texto')
+        mensaje.save()
+    return redirect('mensajes', conversacion_id=conversacion_id)
