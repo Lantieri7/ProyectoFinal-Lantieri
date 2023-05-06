@@ -29,10 +29,8 @@ def usuario(request):
         form = UsuarioForm()
 
     usuario= Usuario.objects.all()
-
-    avatar= Avatar.objects.filter(user=request.user.id)[0].imagen.url
     
-    contex = {"usuario": usuario, "form": form, "avatar":avatar}
+    contex = {"usuario": usuario, "form": form}
     return render(request,'App1/usuario.html', contex)
 
 
@@ -55,8 +53,7 @@ def bandas(request):
         form = BandasForm()
 
     bandas= Bandas.objects.all()
-    avatar= Avatar.objects.filter(user=request.user.id)[0].imagen.url
-    contex = {"bandas": bandas, "form": form, "avatar":avatar}
+    contex = {"bandas": bandas, "form": form}
     return render(request,'App1/bandas.html', contex)
 ######################################################################
 @login_required
@@ -73,8 +70,8 @@ def vocalista(request):
           form = VocalistaForm()
 
         vocalista= Vocalista.objects.all()
-        avatar= Avatar.objects.filter(user=request.user.id)[0].imagen.url
-        contex = {"vocalista": vocalista,"form": form, "avatar":avatar}
+        
+        contex = {"vocalista": vocalista,"form": form}
         return render(request,'App1/vocalista.html', contex)
 ######################################################################
 @login_required
@@ -91,7 +88,7 @@ def guitarrista(request):
           form = GuitarristaForm()
 
     guitarrista= Guitarrista.objects.all()
-    avatar= Avatar.objects.filter(user=request.user.id)[0].imagen.url
+
     contex = {"guitarrista": guitarrista, "form": form}
     return render(request,'App1/guitarrista.html', contex)
 ###################################################################
